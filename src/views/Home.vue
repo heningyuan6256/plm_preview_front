@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="file">
+      <!-- docker构建测试 -->
       <el-table
         ref="table"
         v-loading="loading"
