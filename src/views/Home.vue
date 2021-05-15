@@ -99,13 +99,13 @@ export default {
       // const params = {
       //   id: idArr[1],
       // };
-      this.loading = true;
+      // this.loading = true;
       this.$http
         .get("/agile/view/getFileInfo", {
           params: { id: "1" },
         })
         .then((res) => {
-          this.loading = false;
+          // this.loading = false;
           this.tableData = res;
         });
     },
