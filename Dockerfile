@@ -1,6 +1,8 @@
  
 FROM nginx
  
-EXPOSE 8888
+EXPOSE 88
+
+# COPY dist/  /usr/share/nginx/html/
 
 USER root
