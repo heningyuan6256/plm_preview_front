@@ -92,17 +92,17 @@ export default {
   mounted() {},
   methods: {
     getFinalList() {
-      const aaa = location.href;
-      const arr = aaa.split("&");
-      const idArr = arr[1].split("=");
-      this.id = idArr[1];
-      const params = {
-        id: idArr[1],
-      };
+      // const aaa = location.href;
+      // const arr = aaa.split("&");
+      // const idArr = arr[1].split("=");
+      // this.id = idArr[1];
+      // const params = {
+      //   id: idArr[1],
+      // };
       this.loading = true;
       this.$http
         .get("/agile/view/getFileInfo", {
-          params: params,
+          params: { id: "1" },
         })
         .then((res) => {
           this.loading = false;

@@ -1,7 +1,7 @@
  
 FROM nginx
  
-EXPOSE 88
+EXPOSE 8888
 
 COPY dist/ /usr/share/nginx/html/
 
