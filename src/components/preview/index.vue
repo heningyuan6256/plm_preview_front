@@ -31,7 +31,6 @@ import PdfView from "./pdfView";
 import VideoView from "./videoView";
 import CompressView from "./compressView";
 import XlsView from "./xlsView";
-// import { postPlmFile } from "@/api/public";
 export default {
   name: "Preview",
   components: {
@@ -57,7 +56,6 @@ export default {
   },
   methods: {
     getFileData() {
-      // const fileAddressUrl = process.env.VUE_APP_BASE_API + '/plm-doc' + this.$route.query.url
       const fileAddressUrl = this.$route.query.url;
       const fileNameArr = this.$route.query.fileName.split(".");
       const fileType = `.${fileNameArr[fileNameArr.length - 1]}`;

@@ -27,7 +27,6 @@
 </template>
 
 <script>
-// import { getList, getFileList } from "@/api/public.js";
 export default {
   name: "File",
   components: {},
@@ -92,35 +91,35 @@ export default {
   mounted() {},
   methods: {
     getFinalList() {
-      // const aaa = location.href;
-      // const arr = aaa.split("&");
-      // const idArr = arr[1].split("=");
-      // this.id = idArr[1];
-      // const params = {
-      //   id: idArr[1],
-      // };
-      // this.loading = true;
+      const aaa = location.href;
+      const arr = aaa.split("&");
+      const idArr = arr[1].split("=");
+      this.id = idArr[1];
+      const params = {
+        id: idArr[1],
+      };
+      this.loading = true;
       this.$http
         .get("/agile/view/getFileInfo", {
-          params: { id: "1" },
+          params: params,
         })
         .then((res) => {
-          // this.loading = false;
+          this.loading = false;
           this.tableData = res;
         });
     },
     preview(val) {
-      // var fileName = val.fileName;
-      // fileName = fileName.replace(/#/g, "jinghao");
+      var fileName = val.fileName;
+      fileName = fileName.replace(/#/g, "jinghao");
       const { href } = this.$router.resolve({
         path: "/preview",
         query: {
           url:
-            "http://121.227.30.214:8803/plm-doc/sys/download/z4pmfb5i0jnh4eu9jm2n-单人沙发7.dwg",
-          // "http://172.29.201.220:8001/down/downFile/" +
-          // fileName +
-          // "?fileId=" +
-          // val.fileId,
+            // "http://121.227.30.214:8803/plm-doc/sys/download/z4pmfb5i0jnh4eu9jm2n-单人沙发7.dwg",
+            "http://172.29.201.220:8001/down/downFile/" +
+            fileName +
+            "?fileId=" +
+            val.fileId,
           fileName: val.fileName,
         },
       });
