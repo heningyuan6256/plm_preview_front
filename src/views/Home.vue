@@ -36,9 +36,9 @@ export default {
       loading: false,
       downloadLoading: false,
       tableData: [
-        {
-          fileName: "val.dwg",
-        },
+        // {
+        //   fileName: "val.dwg",
+        // },
       ],
       tableColumn: [
         {
