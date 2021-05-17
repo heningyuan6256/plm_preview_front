@@ -8,7 +8,7 @@
         :url="url"
       ></pdf-view>
       <pdf-view
-        v-else-if="fileStatus === 'AllOfficeEtx'"
+        v-else-if="fileStatus === 'AllOfficeEtx' || fileStatus === 'AllXlsEtx'"
         :url="url"
         :ispdf-type="true"
       ></pdf-view>
@@ -20,7 +20,7 @@
         v-else-if="fileStatus === 'AllAchieveEtx'"
         :file-data="fileData"
       ></compress-view>
-      <xls-view v-else-if="fileStatus === 'AllXlsEtx'" :url="url"></xls-view>
+      <!-- <xls-view v-else-if="fileStatus === 'AllXlsEtx'" :url="url"></xls-view> -->
     </template>
   </div>
 </template>
@@ -30,7 +30,7 @@ import ImageView from "./imageView";
 import PdfView from "./pdfView";
 import VideoView from "./videoView";
 import CompressView from "./compressView";
-import XlsView from "./xlsView";
+// import XlsView from "./xlsView";
 export default {
   name: "Preview",
   components: {
@@ -38,7 +38,7 @@ export default {
     PdfView,
     VideoView,
     CompressView,
-    XlsView,
+    // XlsView,
   },
   props: {},
   data() {
@@ -137,7 +137,7 @@ export default {
           } else if (AllAchieveEtx.includes(fileType)) {
             this.fileStatus = "AllAchieveEtx";
             fType = "contentType";
-            this.fileData = res.data.Data;
+            this.fileData = res.data;
           } else if (AllTxtEtx.includes(fileType)) {
             this.fileStatus = "AllTxtEtx";
             fType = "application/pdf;charset=utf-8";

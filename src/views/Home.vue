@@ -37,7 +37,7 @@ export default {
       downloadLoading: false,
       tableData: [
         // {
-        //   fileName: "val.dwg",
+        //   fileName: "val.xls",
         // },
       ],
       tableColumn: [
@@ -115,7 +115,7 @@ export default {
         path: "/preview",
         query: {
           url:
-            // "http://121.227.30.214:8803/plm-doc/sys/download/z4pmfb5i0jnh4eu9jm2n-单人沙发7.dwg",
+            // "http://121.227.30.214:8803/plm-doc/sys/download/f6u86vf7dpcbuuy8rvtq-xlsx.xlsx",
             "http://192.168.2.90:8001/down/downFile/" +
             fileName +
             "?fileId=" +
