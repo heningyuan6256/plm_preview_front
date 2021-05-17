@@ -137,7 +137,7 @@ export default {
           } else if (AllAchieveEtx.includes(fileType)) {
             this.fileStatus = "AllAchieveEtx";
             fType = "contentType";
-            this.fileData = res.Data;
+            this.fileData = res.data.Data;
           } else if (AllTxtEtx.includes(fileType)) {
             this.fileStatus = "AllTxtEtx";
             fType = "application/pdf;charset=utf-8";

@@ -77,7 +77,7 @@ export default {
     // },
     initFile() {
       const options = {
-        // pdfOpenParams: { scrollbars: "0", toolbar: "0", statusbar: "0" },
+        pdfOpenParams: { scrollbars: "0", statusbar: "0" },
       };
       PDFObject.embed(this.url, "#mycanvas", options);
     },
