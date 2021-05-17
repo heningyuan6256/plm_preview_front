@@ -105,7 +105,7 @@ export default {
         })
         .then((res) => {
           this.loading = false;
-          this.tableData = res;
+          this.tableData = res.data;
         });
     },
     preview(val) {
