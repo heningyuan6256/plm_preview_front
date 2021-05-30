@@ -12,7 +12,8 @@
     "core-js": "^3.6.5",
     "pdfobject": "^2.2.5",
     "pv-plm": "^5.2.3",
-    "vue": "^2.6.11",
+    "vue": "^2.6.11",k
+    "vue-pdf": "^4.2.0",
     "vue-router": "^3.2.0"
   },
   "devDependencies": {

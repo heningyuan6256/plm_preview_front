@@ -7,7 +7,8 @@
   </div>
 </template>
 <script>
-// import pdf from "@/assets/pdf/build/pdf";
+import pdf from "./build/pdf";
+pdf.PDFJS.workerSrc = "./build/pdf.worker.js";
 import PDFObject from "pdfobject";
 export default {
   name: "PdfView",
@@ -24,9 +25,9 @@ export default {
   },
   mounted() {
     // if (this.ispdfType) {
-    //   this.getPdf();
+    this.getPdf();
     // } else {
-    this.initFile();
+    // this.initFile();
     // }
     // document.oncontextmenu = new Function("event.returnValue=false;");
     // document.onselectstart = new Function("event.returnValue=false;");
@@ -57,24 +58,24 @@ export default {
         });
       });
     },
-    // getPdf() {
-    //   // 此中方式接受流形式返回
-    //   this.$refs.mycanvas.scrollTop = 0;
-    //   const pdfjsLib = pdf;
-    //   pdfjsLib.PDFJS.workerSrc = "@/assets/pdf/build/pdf.worker.js";
-    //   const loadingTask = pdfjsLib.getDocument(this.url);
-    //   loadingTask.promise.then(
-    //     (pdf) => {
-    //       const numPages = pdf.numPages;
-    //       const container = document.getElementById("mycanvas");
-    //       const pageNumber = 1;
-    //       this.getPage(pdf, pageNumber, container, numPages);
-    //     },
-    //     function (reason) {
-    //       alert(reason);
-    //     }
-    //   );
-    // },
+    getPdf() {
+      // 此中方式接受流形式返回
+      this.$refs.mycanvas.scrollTop = 0;
+      const pdfjsLib = pdf;
+      pdfjsLib.PDFJS.workerSrc = "@/assets/pdf/build/pdf.worker.js";
+      const loadingTask = pdfjsLib.getDocument(this.url);
+      loadingTask.promise.then(
+        (pdf) => {
+          const numPages = pdf.numPages;
+          const container = document.getElementById("mycanvas");
+          const pageNumber = 1;
+          this.getPage(pdf, pageNumber, container, numPages);
+        },
+        function (reason) {
+          alert(reason);
+        }
+      );
+    },
     initFile() {
       const options = {
         pdfOpenParams: { scrollbars: "0", toolbar: "0", statusbar: "0" },

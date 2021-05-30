@@ -2,7 +2,6 @@
   <div v-loading.fullscreen.lock="fullscreenLoading" class="pre-view">
     <h3 class="h3">文件: {{ fileName }}</h3>
     <template v-if="url">
-      <!-- <image-view v-if="fileStatus === 'AllImageEtx'" :url="url"></image-view> -->
       <pdf-view v-if="pdfStatusObj.includes(fileStatus)" :url="url"></pdf-view>
       <video-view
         v-else-if="fileStatus === 'AllVideoEtx'"
