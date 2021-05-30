@@ -99,7 +99,7 @@ export default {
         query: {
           url:
             // "http://121.227.30.214:8803/plm-doc/sys/download/f6u86vf7dpcbuuy8rvtq-xlsx.xlsx",
-            `http://121.227.30.214:8102/plm-doc/sys/download/7qjuslsuv50l15uwf5xk-2345678.xlsx`,
+            `http://121.227.30.214:8102/plm-doc/sys/download/fty583f4edp43eqtuved-1_阀组基座.DWG-2020-05-24-22-33-05-602.dwg`,
           fileName: this.inputVal,
         },
       });

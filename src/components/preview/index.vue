@@ -112,9 +112,9 @@ export default {
       fd.append("url", fileAddressUrl);
       fd.append(
         "extra1",
-        "2&&1&&http://121.227.30.214:8102/plm-doc/sys/download/0koywvky7sdjem6p7bsr-截屏2021-05-30 下午4.32.36.png"
+        "3&&1&&http://121.227.30.214:8102/plm-doc/sys/download/nvcj49lm12k7slge73rw-l14fd4qyjrtn6xtah8f0-watermark.jpg"
       );
-      fd.append("extra2", "15&&2&&1&&255#0#0&&0.53&&admin");
+      fd.append("extra2", "35&&2&&2&&0#255#0&&0.53&&方正璞华信息技术");
       this.$http({
         method: "post",
         url: "/plm-doc/api/plmfile",
@@ -154,6 +154,11 @@ export default {
           this.url = window.URL.createObjectURL(
             new Blob(binaryData, { type: fType })
           );
+          const link = document.createElement("a"); // 生成一个a标签。
+          link.href = window.URL.createObjectURL(
+            new Blob(binaryData, { type: fType })
+          ); // href属性指定下载链接
+          link.click(); // click()事件触发下载
         })
         .catch(() => {
           this.fullscreenLoading = false;
