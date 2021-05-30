@@ -1,5 +1,7 @@
 <template>
   <div>
+    <el-input v-model="inputVal"> </el-input>
+    <el-button @click="previewTest">预览</el-button>
     <div class="file">
       <!-- docker构建测试12 -->
       <el-table
@@ -32,6 +34,7 @@ export default {
   components: {},
   data() {
     return {
+      inputVal: "",
       id: "",
       loading: false,
       downloadLoading: false,
@@ -90,6 +93,27 @@ export default {
   },
   mounted() {},
   methods: {
+    previewTest() {
+      const { href } = this.$router.resolve({
+        path: "/preview",
+        query: {
+          url:
+            // "http://121.227.30.214:8803/plm-doc/sys/download/f6u86vf7dpcbuuy8rvtq-xlsx.xlsx",
+            `http://121.227.30.214:8102/plm-doc/sys/download/7qjuslsuv50l15uwf5xk-2345678.xlsx`,
+          fileName: this.inputVal,
+        },
+      });
+      window.open(href);
+      // this.$http
+      //   .get("/agile/api/getFile", {
+      //     params: {
+      //       name: "22郭涛.docx",
+      //     },
+      //   })
+      //   .then((res) => {
+      //     console.log(res);
+      //   });
+    },
     getFinalList() {
       const aaa = location.href;
       const arr = aaa.split("&");
@@ -116,7 +140,7 @@ export default {
         query: {
           url:
             // "http://121.227.30.214:8803/plm-doc/sys/download/f6u86vf7dpcbuuy8rvtq-xlsx.xlsx",
-            "http://192.168.2.90:8001/down/downFile/" +
+            "http://192.168.24.22:8001/down/downFile/" +
             fileName +
             "?fileId=" +
             val.fileId,

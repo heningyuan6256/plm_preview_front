@@ -2,16 +2,8 @@
   <div v-loading.fullscreen.lock="fullscreenLoading" class="pre-view">
     <h3 class="h3">文件: {{ fileName }}</h3>
     <template v-if="url">
-      <image-view v-if="fileStatus === 'AllImageEtx'" :url="url"></image-view>
-      <pdf-view
-        v-else-if="pdfStatusObj.includes(fileStatus)"
-        :url="url"
-      ></pdf-view>
-      <pdf-view
-        v-else-if="fileStatus === 'AllOfficeEtx' || fileStatus === 'AllXlsEtx'"
-        :url="url"
-        :ispdf-type="true"
-      ></pdf-view>
+      <!-- <image-view v-if="fileStatus === 'AllImageEtx'" :url="url"></image-view> -->
+      <pdf-view v-if="pdfStatusObj.includes(fileStatus)" :url="url"></pdf-view>
       <video-view
         v-else-if="fileStatus === 'AllVideoEtx'"
         :url="url"
@@ -26,7 +18,7 @@
 </template>
 
 <script>
-import ImageView from "./imageView";
+// import ImageView from "./imageView";
 import PdfView from "./pdfView";
 import VideoView from "./videoView";
 import CompressView from "./compressView";
@@ -34,7 +26,7 @@ import CompressView from "./compressView";
 export default {
   name: "Preview",
   components: {
-    ImageView,
+    // ImageView,
     PdfView,
     VideoView,
     CompressView,
@@ -48,7 +40,13 @@ export default {
       url: "",
       fileData: {},
       fileStatus: "",
-      pdfStatusObj: ["AllTxtEtx", "AllCADEtx"],
+      pdfStatusObj: [
+        "AllTxtEtx",
+        "AllCADEtx",
+        "AllOfficeEtx",
+        "AllXlsEtx",
+        "AllImageEtx",
+      ],
     };
   },
   mounted() {
@@ -113,6 +111,11 @@ export default {
       this.fullscreenLoading = true;
       const fd = new FormData();
       fd.append("url", fileAddressUrl);
+      fd.append(
+        "extra1",
+        "2&&1&&http://121.227.30.214:8102/plm-doc/sys/download/0koywvky7sdjem6p7bsr-截屏2021-05-30 下午4.32.36.png"
+      );
+      fd.append("extra2", "15&&2&&1&&255#0#0&&0.53&&admin");
       this.$http({
         method: "post",
         url: "/plm-doc/api/plmfile",
@@ -130,7 +133,8 @@ export default {
             fType = "application/pdf";
           } else if (AllImageEtx.includes(fileType)) {
             this.fileStatus = "AllImageEtx";
-            fType = "image/png";
+            fType = "application/pdf";
+            // image/png
           } else if (AllCADEtx.includes(fileType)) {
             this.fileStatus = "AllCADEtx";
             fType = "application/pdf";

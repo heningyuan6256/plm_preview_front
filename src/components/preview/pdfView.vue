@@ -94,4 +94,10 @@ export default {
     overflow-y: auto;
   }
 }
+::v-deep #toolbarViewerRight {
+  display: none !important;
+}
+#mycanvas {
+  background: olivedrab;
+}
 </style>
