@@ -154,11 +154,11 @@ export default {
           this.url = window.URL.createObjectURL(
             new Blob(binaryData, { type: fType })
           );
-          const link = document.createElement("a"); // 生成一个a标签。
-          link.href = window.URL.createObjectURL(
-            new Blob(binaryData, { type: fType })
-          ); // href属性指定下载链接
-          link.click(); // click()事件触发下载
+          // const link = document.createElement("a"); // 生成一个a标签。
+          // link.href = window.URL.createObjectURL(
+          //   new Blob(binaryData, { type: fType })
+          // ); // href属性指定下载链接
+          // link.click(); // click()事件触发下载
         })
         .catch(() => {
           this.fullscreenLoading = false;

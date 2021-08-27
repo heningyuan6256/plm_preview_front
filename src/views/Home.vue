@@ -88,18 +88,16 @@ export default {
       ],
     };
   },
-  created() {
+  created() {},
+  mounted() {
     this.getFinalList();
   },
-  mounted() {},
   methods: {
     previewTest() {
       const { href } = this.$router.resolve({
         path: "/preview",
         query: {
-          url:
-            // "http://121.227.30.214:8803/plm-doc/sys/download/f6u86vf7dpcbuuy8rvtq-xlsx.xlsx",
-            `http://121.227.30.214:8102/plm-doc/sys/download/fty583f4edp43eqtuved-1_阀组基座.DWG-2020-05-24-22-33-05-602.dwg`,
+          url: `http://121.227.30.214:8102/plm-doc/sys/download/fty583f4edp43eqtuved-1_阀组基座.DWG-2020-05-24-22-33-05-602.dwg`,
           fileName: this.inputVal,
         },
       });
@@ -114,22 +112,53 @@ export default {
       //     console.log(res);
       //   });
     },
+    getUrlParams(name) {
+      // 不传name返回所有值，否则返回对应值
+      var url = window.location.search;
+      if (url.indexOf("?") == 1) {
+        return false;
+      }
+      url = url.substr(1);
+      url = url.split("&");
+      name = name || "";
+      var nameres;
+      // 获取全部参数及其值
+      for (var i = 0; i < url.length; i++) {
+        var info = url[i].split("=");
+        var obj = {};
+        obj[info[0]] = decodeURI(info[1]);
+        url[i] = obj;
+      }
+      // 如果传入一个参数名称，就匹配其值
+      if (name) {
+        for (let i = 0; i < url.length; i++) {
+          for (const key in url[i]) {
+            if (key == name) {
+              nameres = url[i][key];
+            }
+          }
+        }
+      } else {
+        nameres = url;
+      }
+      // 返回结果
+      return nameres;
+    },
     getFinalList() {
-      const aaa = location.href;
-      const arr = aaa.split("&");
-      const idArr = arr[1].split("=");
-      this.id = idArr[1];
       const params = {
-        id: idArr[1],
+        itemNumber: this.getUrlParams("agile.1001") || "",
+        itemChangeNumber: this.getUrlParams("agile.1014") || "",
+        changeNumber: this.getUrlParams("agile.1047") || "",
       };
-      this.loading = true;
       this.$http
         .get("/agile/view/getFileInfo", {
           params: params,
         })
         .then((res) => {
-          this.loading = false;
           this.tableData = res.data;
+        })
+        .catch(() => {
+          // location.reload();
         });
     },
     preview(val) {
@@ -139,8 +168,7 @@ export default {
         path: "/preview",
         query: {
           url:
-            // "http://121.227.30.214:8803/plm-doc/sys/download/f6u86vf7dpcbuuy8rvtq-xlsx.xlsx",
-            "http://192.168.24.22:8001/down/downFile/" +
+            "http://192.168.0.113:8001/down/downFile/" +
             fileName +
             "?fileId=" +
             val.fileId,
@@ -150,18 +178,18 @@ export default {
       window.open(href);
     },
     // 预览
-    handlePreview(scope) {
-      const fileAddressUrl =
-        process.env.VUE_APP_BASE_API + "/plm-doc" + scope.row.fileUrl;
-      const { href } = this.$router.resolve({
-        path: "/preview",
-        query: {
-          url: fileAddressUrl,
-          fileName: scope.row.fileName,
-        },
-      });
-      window.open(href, "_blank");
-    },
+    // handlePreview(scope) {
+    //   const fileAddressUrl =
+    //     "http://192.168.99.100:8001" + "/plm-doc" + scope.row.fileUrl;
+    //   const { href } = this.$router.resolve({
+    //     path: "/preview",
+    //     query: {
+    //       url: fileAddressUrl,
+    //       fileName: scope.row.fileName,
+    //     },
+    //   });
+    //   window.open(href, "_blank");
+    // },
   },
 };
 </script>
