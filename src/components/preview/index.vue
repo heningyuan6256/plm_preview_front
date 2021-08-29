@@ -58,7 +58,7 @@ export default {
       const fileType = `.${fileNameArr[fileNameArr.length - 1]}`;
       const AllOfficeEtx = [".pdf", ".doc", ".docx", ".pptx", ".ppt"]; // 解决
       const AllImageEtx = [".jpg", ".png", ".gif", ".bmp", ".heic", ".jpeg"]; // 解决  '.tiff'需要单独处理，没有需求要展示，所以暂时不处理
-      const AllCADEtx = [".dwg", ".dxf"]; // 解决
+      const AllCADEtx = [".dwg", ".dxf", ".DWG"]; // 解决
       const AllXlsEtx = [".xls", ".xlsx"]; // 解决
       const AllAchieveEtx = [
         ".tar.gz",
@@ -110,11 +110,11 @@ export default {
       this.fullscreenLoading = true;
       const fd = new FormData();
       fd.append("url", fileAddressUrl);
-      fd.append(
-        "extra1",
-        "3&&1&&http://121.227.30.214:8102/plm-doc/sys/download/nvcj49lm12k7slge73rw-l14fd4qyjrtn6xtah8f0-watermark.jpg"
-      );
-      fd.append("extra2", "35&&2&&2&&0#255#0&&0.53&&方正璞华信息技术");
+      // fd.append(
+      //   "extra1",
+      //   "3&&1&&http://121.227.30.214:8102/plm-doc/sys/download/nvcj49lm12k7slge73rw-l14fd4qyjrtn6xtah8f0-watermark.jpg"
+      // );
+      // fd.append("extra2", "35&&2&&2&&0#255#0&&0.53&&方正璞华信息技术");
       this.$http({
         method: "post",
         url: "/plm-doc/api/plmfile",
