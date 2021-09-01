@@ -1,7 +1,8 @@
 module.exports = {
-  publicPath: "./",
+  publicPath: "/",
   outputDir: "dist",
   assetsDir: "static",
+  assetsPublicPath: "./",
   devServer: {
     proxy: {
       "/plm-doc": {
