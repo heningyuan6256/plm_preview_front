@@ -138,7 +138,7 @@ export default {
       fd.append("extra2", "35&&2&&2&&0#255#0&&0.53&&方正璞华信息技术");
       this.$http({
         method: "post",
-        url: "/plm-doc/api/plmfile",
+        url: "/api/plmfile",
         headers: { "Content-type": "application/x-www-form-urlencoded" },
         responseType: responseType,
         data: fd,
