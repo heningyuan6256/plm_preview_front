@@ -53,164 +53,6 @@ export default {
   },
   methods: {
     getFileData() {
-      var water = null;
-      var imageUrl = null;
-      this.$http({
-        method: "get",
-        url: "/view/getWatermarkAndSignInfo",
-      }).then((waterData) => {
-        this.$http({
-          method: "get",
-          url: "/down/downSignFile",
-        }).then((imageUrlData) => {
-          water = waterData.data;
-          imageUrl = imageUrlData.data;
-          const {
-            location,
-            show,
-            fontSize,
-            showManner,
-            tileManner,
-            color,
-            transparency,
-          } = water;
-          const fileAddressUrl = this.$route.query.url;
-          const fileNameArr = this.$route.query.fileName.split(".");
-          const fileType = `.${fileNameArr[fileNameArr.length - 1]}`;
-          const AllOfficeEtx = [".pdf", ".doc", ".docx", ".pptx", ".ppt"]; // 解决
-          const AllImageEtx = [
-            ".jpg",
-            ".png",
-            ".gif",
-            ".bmp",
-            ".heic",
-            ".jpeg",
-          ]; // 解决  '.tiff'需要单独处理，没有需求要展示，所以暂时不处理
-          const AllCADEtx = [".dwg", ".dxf", ".DWG"]; // 解决
-          const AllXlsEtx = [".xls", ".xlsx"]; // 解决
-          const AllAchieveEtx = [
-            ".tar.gz",
-            ".tar.bzip2",
-            ".tar.xz",
-            ".zip",
-            ".rar",
-            ".tar",
-            ".7z",
-            "br",
-            ".bz2",
-            ".lz4",
-            ".sz",
-            ".xz",
-            ".zstd",
-          ];
-          const AllTxtEtx = [
-            ".txt",
-            ".java",
-            ".php",
-            ".py",
-            ".md",
-            ".js",
-            ".css",
-            ".xml",
-            ".log",
-            ".json",
-            ".html",
-            ".svg",
-            ".vue",
-          ]; // 解决
-          const AllVideoEtx = [".mp4", ".webm", ".ogg"]; // 解决
-          const AllEtx = [
-            ...AllOfficeEtx,
-            ...AllImageEtx,
-            ...AllCADEtx,
-            ...AllAchieveEtx,
-            ...AllTxtEtx,
-            ...AllVideoEtx,
-            ...AllXlsEtx,
-          ];
-          let responseType = "arraybuffer";
-          if (!AllEtx.includes(fileType)) {
-            this.$message.error("不支持此类型文件预览");
-            return;
-          } else if (AllAchieveEtx.includes(fileType)) {
-            responseType = "json";
-          }
-          this.fullscreenLoading = true;
-          const extra1 = location + "&&" + show + "&&" + imageUrl;
-          const extra2 =
-            fontSize +
-            "&&" +
-            showManner +
-            "&&" +
-            tileManner +
-            "&&" +
-            color
-              .split(",")
-              .map((item) => {
-                return item.replace(/[^0-9]/gi, "");
-              })
-              .join("#") +
-            "&&" +
-            transparency / 100;
-          const fd = new FormData();
-          fd.append("url", fileAddressUrl);
-          fd.append("extra1", extra1);
-          fd.append("extra2", extra2);
-          // fd.append(
-          //   "extra1",
-          //   "3&&1&&http://121.227.30.214:8102/plm-doc/sys/download/nvcj49lm12k7slge73rw-l14fd4qyjrtn6xtah8f0-watermark.jpg"
-          // );
-          // fd.append("extra2", "35&&2&&2&&0#255#0&&0.53&&方正璞华信息技术");
-          this.$http({
-            method: "post",
-            url: "/plm-doc/api/plmfile",
-            headers: { "Content-type": "application/x-www-form-urlencoded" },
-            responseType: responseType,
-            data: fd,
-          })
-            .then((res) => {
-              this.fullscreenLoading = false;
-              var binaryData = [];
-              binaryData.push(res.data);
-              let fType = "";
-              if (AllOfficeEtx.includes(fileType)) {
-                this.fileStatus = "AllOfficeEtx";
-                fType = "application/pdf";
-              } else if (AllImageEtx.includes(fileType)) {
-                this.fileStatus = "AllImageEtx";
-                fType = "application/pdf";
-                // image/png
-              } else if (AllCADEtx.includes(fileType)) {
-                this.fileStatus = "AllCADEtx";
-                fType = "application/pdf";
-              } else if (AllAchieveEtx.includes(fileType)) {
-                this.fileStatus = "AllAchieveEtx";
-                fType = "contentType";
-                this.fileData = res.data;
-              } else if (AllTxtEtx.includes(fileType)) {
-                this.fileStatus = "AllTxtEtx";
-                fType = "application/pdf;charset=utf-8";
-              } else if (AllVideoEtx.includes(fileType)) {
-                this.fileStatus = "AllVideoEtx";
-                fType = "video/mp4";
-              } else if (AllXlsEtx.includes(fileType)) {
-                this.fileStatus = "AllXlsEtx";
-                fType = "application/pdf";
-              }
-              this.url = window.URL.createObjectURL(
-                new Blob(binaryData, { type: fType })
-              );
-              // const link = document.createElement("a"); // 生成一个a标签。
-              // link.href = window.URL.createObjectURL(
-              //   new Blob(binaryData, { type: fType })
-              // ); // href属性指定下载链接
-              // link.click(); // click()事件触发下载
-            })
-            .catch(() => {
-              this.fullscreenLoading = false;
-            });
-        });
-      });
       // const water = (
       //   await this.$http({
       //     method: "get",
@@ -223,6 +65,125 @@ export default {
       //     url: "/down/downSignFile",
       //   })
       // ).data;
+      // const {
+      //   location,
+      //   show,
+      //   fontSize,
+      //   showManner,
+      //   tileManner,
+      //   color,
+      //   transparency,
+      // } = water;
+      const fileAddressUrl = this.$route.query.url;
+      const fileNameArr = this.$route.query.fileName.split(".");
+      const fileType = `.${fileNameArr[fileNameArr.length - 1]}`;
+      const AllOfficeEtx = [".pdf", ".doc", ".docx", ".pptx", ".ppt"]; // 解决
+      const AllImageEtx = [".jpg", ".png", ".gif", ".bmp", ".heic", ".jpeg"]; // 解决  '.tiff'需要单独处理，没有需求要展示，所以暂时不处理
+      const AllCADEtx = [".dwg", ".dxf", ".DWG"]; // 解决
+      const AllXlsEtx = [".xls", ".xlsx"]; // 解决
+      const AllAchieveEtx = [
+        ".tar.gz",
+        ".tar.bzip2",
+        ".tar.xz",
+        ".zip",
+        ".rar",
+        ".tar",
+        ".7z",
+        "br",
+        ".bz2",
+        ".lz4",
+        ".sz",
+        ".xz",
+        ".zstd",
+      ];
+      const AllTxtEtx = [
+        ".txt",
+        ".java",
+        ".php",
+        ".py",
+        ".md",
+        ".js",
+        ".css",
+        ".xml",
+        ".log",
+        ".json",
+        ".html",
+        ".svg",
+        ".vue",
+      ]; // 解决
+      const AllVideoEtx = [".mp4", ".webm", ".ogg"]; // 解决
+      const AllEtx = [
+        ...AllOfficeEtx,
+        ...AllImageEtx,
+        ...AllCADEtx,
+        ...AllAchieveEtx,
+        ...AllTxtEtx,
+        ...AllVideoEtx,
+        ...AllXlsEtx,
+      ];
+      let responseType = "arraybuffer";
+      if (!AllEtx.includes(fileType)) {
+        this.$message.error("不支持此类型文件预览");
+        return;
+      } else if (AllAchieveEtx.includes(fileType)) {
+        responseType = "json";
+      }
+      this.fullscreenLoading = true;
+      const fd = new FormData();
+      fd.append("url", fileAddressUrl);
+      // fd.append(
+      //   "extra1",
+      //   "3&&1&&http://121.227.30.214:8102/plm-doc/sys/download/nvcj49lm12k7slge73rw-l14fd4qyjrtn6xtah8f0-watermark.jpg"
+      // );
+      fd.append("extra2", "35&&2&&2&&0#255#0&&0.53&&方正璞华信息技术");
+      this.$http({
+        method: "post",
+        url: "/plm-doc/api/plmfile",
+        headers: { "Content-type": "application/x-www-form-urlencoded" },
+        responseType: responseType,
+        data: fd,
+      })
+        .then((res) => {
+          this.fullscreenLoading = false;
+          var binaryData = [];
+          binaryData.push(res.data);
+          let fType = "";
+          if (AllOfficeEtx.includes(fileType)) {
+            this.fileStatus = "AllOfficeEtx";
+            fType = "application/pdf";
+          } else if (AllImageEtx.includes(fileType)) {
+            this.fileStatus = "AllImageEtx";
+            fType = "application/pdf";
+            // image/png
+          } else if (AllCADEtx.includes(fileType)) {
+            this.fileStatus = "AllCADEtx";
+            fType = "application/pdf";
+          } else if (AllAchieveEtx.includes(fileType)) {
+            this.fileStatus = "AllAchieveEtx";
+            fType = "contentType";
+            this.fileData = res.data;
+          } else if (AllTxtEtx.includes(fileType)) {
+            this.fileStatus = "AllTxtEtx";
+            fType = "application/pdf;charset=utf-8";
+          } else if (AllVideoEtx.includes(fileType)) {
+            this.fileStatus = "AllVideoEtx";
+            fType = "video/mp4";
+          } else if (AllXlsEtx.includes(fileType)) {
+            this.fileStatus = "AllXlsEtx";
+            fType = "application/pdf";
+          }
+          this.url = window.URL.createObjectURL(
+            new Blob(binaryData, { type: fType })
+          );
+          // const link = document.createElement("a"); // 生成一个a标签。
+          // link.href = window.URL.createObjectURL(
+          //   new Blob(binaryData, { type: fType })
+          // ); // href属性指定下载链接
+          // link.click(); // click()事件触发下载
+        })
+        .catch(() => {
+          this.fullscreenLoading = false;
+        });
     },
   },
 };

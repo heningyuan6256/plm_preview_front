@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-input v-model="inputVal"> </el-input>
-    <el-button @click="previewTest">预览</el-button>
+    <!-- <el-input v-model="inputVal"> </el-input>
+    <el-button @click="previewTest">预览</el-button> -->
     <div class="file">
       <!-- docker构建测试12 -->
       <el-table
