@@ -55,7 +55,7 @@ export default {
     async getFileData() {
       const water = (
         await this.$http({
-          method: "post",
+          method: "get",
           url: "/view/getWatermarkAndSignInfo",
         })
       ).data;
