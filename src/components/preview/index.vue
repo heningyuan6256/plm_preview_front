@@ -52,7 +52,28 @@ export default {
     this.getFileData();
   },
   methods: {
-    getFileData() {
+    async getFileData() {
+      const water = (
+        await this.$http({
+          method: "post",
+          url: "/view/getWatermarkAndSignInfo",
+        })
+      ).data;
+      const imageUrl = (
+        await this.$http({
+          method: "get",
+          url: "/down/downSignFile",
+        })
+      ).data;
+      const {
+        location,
+        show,
+        fontSize,
+        showManner,
+        tileManner,
+        color,
+        transparency,
+      } = water;
       const fileAddressUrl = this.$route.query.url;
       const fileNameArr = this.$route.query.fileName.split(".");
       const fileType = `.${fileNameArr[fileNameArr.length - 1]}`;
@@ -108,8 +129,26 @@ export default {
         responseType = "json";
       }
       this.fullscreenLoading = true;
+      const extra1 = location + "&&" + show + "&&" + imageUrl;
+      const extra2 =
+        fontSize +
+        "&&" +
+        showManner +
+        "&&" +
+        tileManner +
+        "&&" +
+        color
+          .split(",")
+          .map((item) => {
+            return item.replace(/[^0-9]/gi, "");
+          })
+          .join("#") +
+        "&&" +
+        transparency / 100;
       const fd = new FormData();
       fd.append("url", fileAddressUrl);
+      fd.append("extra1", extra1);
+      fd.append("extra2", extra2);
       // fd.append(
       //   "extra1",
       //   "3&&1&&http://121.227.30.214:8102/plm-doc/sys/download/nvcj49lm12k7slge73rw-l14fd4qyjrtn6xtah8f0-watermark.jpg"
