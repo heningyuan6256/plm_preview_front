@@ -52,28 +52,54 @@ export default {
     this.getFileData();
   },
   methods: {
-    getFileData() {
-      // const water = (
-      //   await this.$http({
-      //     method: "get",
-      //     url: "/view/getWatermarkAndSignInfo",
-      //   })
-      // ).data;
+    async getFileData() {
+      this.fullscreenLoading = true;
+      const water = (
+        await this.$http({
+          method: "get",
+          url: "/agile/view/getWatermarkAndSignInfo",
+        })
+      ).data;
       // const imageUrl = (
       //   await this.$http({
       //     method: "get",
-      //     url: "/down/downSignFile",
+      //     url: "/agile/down/downSignFile",
       //   })
       // ).data;
-      // const {
-      //   location,
-      //   show,
-      //   fontSize,
-      //   showManner,
-      //   tileManner,
-      //   color,
-      //   transparency,
-      // } = water;
+      const {
+        location,
+        show,
+        fontSize,
+        showManner,
+        tileManner,
+        color,
+        transparency,
+        remark,
+        isSign,
+      } = water;
+      const extra1 =
+        location +
+        "&&" +
+        show +
+        "&&" +
+        `http://192.168.2.90:8001/down/downSignFile`;
+      const extra2 =
+        fontSize +
+        "&&" +
+        showManner +
+        "&&" +
+        tileManner +
+        "&&" +
+        color
+          .split(",")
+          .map((item) => {
+            return item.replace(/[^0-9]/gi, "");
+          })
+          .join("#") +
+        "&&" +
+        transparency / 100 +
+        "&&" +
+        `${remark}`;
       const fileAddressUrl = this.$route.query.url;
       const fileNameArr = this.$route.query.fileName.split(".");
       const fileType = `.${fileNameArr[fileNameArr.length - 1]}`;
@@ -128,14 +154,16 @@ export default {
       } else if (AllAchieveEtx.includes(fileType)) {
         responseType = "json";
       }
-      this.fullscreenLoading = true;
       const fd = new FormData();
       fd.append("url", fileAddressUrl);
       // fd.append(
       //   "extra1",
       //   "3&&1&&http://121.227.30.214:8102/plm-doc/sys/download/nvcj49lm12k7slge73rw-l14fd4qyjrtn6xtah8f0-watermark.jpg"
       // );
-      fd.append("extra2", "35&&2&&2&&0#255#0&&0.53&&方正璞华信息技术");
+      if (isSign === "1") {
+        fd.append("extra1", extra1);
+      }
+      fd.append("extra2", extra2);
       this.$http({
         method: "post",
         url: "/api/plmfile",

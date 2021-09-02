@@ -150,14 +150,17 @@ export default {
         itemChangeNumber: this.getUrlParams("agile.1014") || "",
         changeNumber: this.getUrlParams("agile.1047") || "",
       };
+      this.loading = true;
       this.$http
         .get("/agile/view/getFileInfo", {
           params: params,
         })
         .then((res) => {
+          this.loading = false;
           this.tableData = res.data;
         })
         .catch(() => {
+          this.loading = false;
           // location.reload();
         });
     },
