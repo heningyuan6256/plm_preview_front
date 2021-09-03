@@ -170,14 +170,13 @@ export default {
       const { href } = this.$router.resolve({
         path: "/preview",
         query: {
-          url: `http://192.168.2.90:8001/down/downFile/${fileName}?rowId=${
+          url: `http://192.168.2.90:8001/down/downFile/${fileName}?info=${
             val.rowId
-          }&itemNumber=${
-            this.getUrlParams("agile.1001") || ""
-          }&itemChangeNumber=${
-            this.getUrlParams("agile.1014") || ""
-          }&changeNumber=${this.getUrlParams("agile.1047") || ""}`,
+          },${this.getUrlParams("agile.1001") || "#"},${
+            this.getUrlParams("agile.1014") || "#"
+          },${this.getUrlParams("agile.1047") || "#"}`,
           fileName: val.fileName,
+          currentUser: this.getUrlParams("agile.userName"),
         },
       });
       window.open(href);

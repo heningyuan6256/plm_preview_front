@@ -86,12 +86,11 @@ export default {
     },
     async getFileData() {
       this.fullscreenLoading = true;
-      const params = {
-        currentUser: this.getUrlParams("agile.userName"),
-      };
       const water = (
         await this.$http.get("/agile/view/getWatermarkAndSignInfo", {
-          params,
+          params: {
+            currentUser: this.$route.query.currentUser,
+          },
         })
       ).data;
       // const imageUrl = (
