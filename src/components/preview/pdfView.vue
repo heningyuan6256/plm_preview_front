@@ -37,6 +37,7 @@ export default {
       var loadingTask = pdf.createLoadingTask(this.url);
       loadingTask.promise
         .then((pdf) => {
+        
           this.numPages = pdf.numPages;
         })
         .catch(() => {

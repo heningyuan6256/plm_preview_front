@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <el-input v-model="inputVal"> </el-input>
-    <el-button @click="previewTest">预览</el-button> -->
+    <!-- <el-input v-model="inputVal"> </el-input> -->
+    <!-- <el-button @click="previewTest">预览</el-button> -->
     <div class="file">
       <!-- docker构建测试12 -->
       <el-table
@@ -164,6 +164,18 @@ export default {
           // location.reload();
         });
     },
+    get1047() {
+      const val = this.getUrlParams("agile.1014");
+      if (val) {
+        if (val.indexOf(" ") !== -1) {
+          return val.split("        ")[1];
+        } else {
+          return "初始";
+        }
+      } else {
+        return "";
+      }
+    },
     preview(val) {
       var fileName = val.fileName;
       fileName = fileName.replace(/#/g, "jinghao");
@@ -172,9 +184,9 @@ export default {
         query: {
           url: `http://192.168.2.90:8001/down/downFile/${fileName}?info=${
             val.rowId
-          },${this.getUrlParams("agile.1001") || "#"},${
-            this.getUrlParams("agile.1014") || "#"
-          },${this.getUrlParams("agile.1047") || "#"}`,
+          },${this.getUrlParams("agile.1001") || ""},${this.get1047()},${
+            this.getUrlParams("agile.1047") || ""
+          }`,
           fileName: val.fileName,
           currentUser: this.getUrlParams("agile.userName"),
         },
